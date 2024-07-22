@@ -8105,7 +8105,10 @@ h1, h2, h3, h4, h5,
     color: #000000;
     font-weight: 800;
     font-size: 28px;
-    line-height: 1; }
+    line-height: 1;
+    width: 23%;
+
+  }
     .ftco-navbar-light .navbar-brand span {
       color: #cccccc; }
     .ftco-navbar-light .navbar-brand:hover, .ftco-navbar-light .navbar-brand:focus {
