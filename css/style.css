@@ -8109,6 +8109,11 @@ h1, h2, h3, h4, h5,
     width: 23%;
 
   }
+  .navbar-brand img {
+    width: 23%;
+
+
+  }
     .ftco-navbar-light .navbar-brand span {
       color: #cccccc; }
     .ftco-navbar-light .navbar-brand:hover, .ftco-navbar-light .navbar-brand:focus {
