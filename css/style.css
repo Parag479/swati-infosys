@@ -8872,7 +8872,7 @@ textarea.form-control {
     bottom: 0;
     left: 0;
     right: 0;
-    width: 0%;
+    width: 100%;
     margin: 0 auto; }
     .block-7 .btn-primary:hover, .block-7 .btn-primary:focus {
       background: #1ba12d !important;
