@@ -238,50 +238,53 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
   }
 
 
-  const {
-	GoogleGenerativeAI,
-	HarmCategory,
-	HarmBlockThreshold,
-  } = require("@google/generative-ai");
-  
-  const apiKey = process.env.GEMINI_API_KEY;
-  const genAI = new GoogleGenerativeAI(apiKey);
-  
-  const model = genAI.getGenerativeModel({
-	model: "gemini-2.0-flash-exp",
-	tools: [{codeExecution: {}}],
-  });
-  
-  const generationConfig = {
-	temperature: 1,
-	topP: 0.95,
-	topK: 40,
-	maxOutputTokens: 8192,
-	responseMimeType: "text/plain",
-  };
-  
-  async function run() {
-	const chatSession = model.startChat({
-	  generationConfig,
-	  history: [
-		{
-		  role: "user",
-		  parts: [
-			{text: "swati infosys  chatbot create"},
-		  ],
-		},
-		{
-		  role: "model",
-		  parts: [
-			{text: "Okay, I understand you're asking about creating a chatbot for \"Swati Infosys\". To give you the best information, I need a little more context.  Could you tell me more about what you want this chatbot to do? For example:\n\n*   **What is the purpose of the chatbot?**  Is it for customer support, lead generation, internal employee assistance, or something else?\n*   **What kind of information will the chatbot need to handle?** Will it need to answer questions about Swati Infosys's services, products, or something else? Will it need access to any specific internal data?\n*   **What platforms do you want the chatbot to work on?**  Website, mobile app, messaging platforms like WhatsApp or Slack?\n*   **Do you have any specific requirements for how the chatbot should interact?**  Formal, informal, use specific tone, etc.?\n*   **Do you have a budget in mind for this project?** This will help determine which technologies and methods we can explore.\n\nOnce I have a better understanding of your needs, I can provide more specific advice on how to approach creating the chatbot.\n"},
-		  ],
-		},
-	  ],
-	});
-  
-	const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
-	console.log(result.response.text());
-  }
-  
-  run();
+  const chatbotToggler = document.getElementById("chatbot-toggler");
+const chatbotPopup = document.querySelector(".chatbot-popup");
+const closeChatbot = document.getElementById("close-chatbot");
+const sendMessage = document.getElementById("send-message");
+const messageInput = document.querySelector(".message-input");
+const chatBody = document.querySelector(".chat-body");
+
+const API_KEY = "AIzaSyB_O4QBz7_Nbr5ZIxQn09RNfnG0Dxd4wrU"; // Replace with your actual API key
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+
+chatbotToggler.addEventListener("click", () => {
+    chatbotPopup.style.display = "block";
+});
+
+closeChatbot.addEventListener("click", () => {
+    chatbotPopup.style.display = "none";
+});
+
+sendMessage.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const userMessage = messageInput.value.trim();
+    if (userMessage) {
+        appendMessage("You: " + userMessage);
+        messageInput.value = "";
+        const botResponse = await getBotResponse(userMessage);
+        appendMessage("Bot: " + botResponse);
+    }
+});
+
+function appendMessage(message) {
+    const messageElement = document.createElement("div");
+    messageElement.textContent = message;
+    chatBody.appendChild(messageElement);
+    chatBody.scrollTop = chatBody.scrollHeight; // Scroll to the bottom
+}
+
+async function getBotResponse(message) {
+    const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            contents: [{ role: "user", parts: [{ text: message }] }]
+        })
+    });
+    const data = await response.json();
+    return data.candidates[0].content.parts[0].text;
+}
   
