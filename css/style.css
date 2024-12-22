@@ -9665,6 +9665,7 @@ textarea.form-control {
     border-radius: 50%;
     padding: 10px 15px;
     cursor: pointer;
+    z-index: 99;
 }
 
 .chatbot-popup {
