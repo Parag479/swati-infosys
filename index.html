@@ -758,7 +758,7 @@ const messageInput = document.querySelector(".message-input");
 const chatBody = document.querySelector(".chat-body");
 
 const API_KEY = "AIzaSyB_O4QBz7_Nbr5ZIxQn09RNfnG0Dxd4wrU"; // Replace with your actual API key
-const API_URL = `https://aistudio.google.com/u/1/apikey=${API_KEY}`;
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
 chatbotToggler.addEventListener("click", () => {
     chatbotPopup.style.display = chatbotPopup.style.display === "block" ? "none" : "block";
