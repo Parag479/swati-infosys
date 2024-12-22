@@ -236,4 +236,52 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
 	const data = await response.json();
 	return data.reply;
   }
+
+
+  const {
+	GoogleGenerativeAI,
+	HarmCategory,
+	HarmBlockThreshold,
+  } = require("@google/generative-ai");
+  
+  const apiKey = process.env.GEMINI_API_KEY;
+  const genAI = new GoogleGenerativeAI(apiKey);
+  
+  const model = genAI.getGenerativeModel({
+	model: "gemini-2.0-flash-exp",
+	tools: [{codeExecution: {}}],
+  });
+  
+  const generationConfig = {
+	temperature: 1,
+	topP: 0.95,
+	topK: 40,
+	maxOutputTokens: 8192,
+	responseMimeType: "text/plain",
+  };
+  
+  async function run() {
+	const chatSession = model.startChat({
+	  generationConfig,
+	  history: [
+		{
+		  role: "user",
+		  parts: [
+			{text: "swati infosys  chatbot create"},
+		  ],
+		},
+		{
+		  role: "model",
+		  parts: [
+			{text: "Okay, I understand you're asking about creating a chatbot for \"Swati Infosys\". To give you the best information, I need a little more context.  Could you tell me more about what you want this chatbot to do? For example:\n\n*   **What is the purpose of the chatbot?**  Is it for customer support, lead generation, internal employee assistance, or something else?\n*   **What kind of information will the chatbot need to handle?** Will it need to answer questions about Swati Infosys's services, products, or something else? Will it need access to any specific internal data?\n*   **What platforms do you want the chatbot to work on?**  Website, mobile app, messaging platforms like WhatsApp or Slack?\n*   **Do you have any specific requirements for how the chatbot should interact?**  Formal, informal, use specific tone, etc.?\n*   **Do you have a budget in mind for this project?** This will help determine which technologies and methods we can explore.\n\nOnce I have a better understanding of your needs, I can provide more specific advice on how to approach creating the chatbot.\n"},
+		  ],
+		},
+	  ],
+	});
+  
+	const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
+	console.log(result.response.text());
+  }
+  
+  run();
   
