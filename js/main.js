@@ -238,53 +238,5 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
   }
 
 
-  const chatbotToggler = document.getElementById("chatbot-toggler");
-const chatbotPopup = document.querySelector(".chatbot-popup");
-const closeChatbot = document.getElementById("close-chatbot");
-const sendMessage = document.getElementById("send-message");
-const messageInput = document.querySelector(".message-input");
-const chatBody = document.querySelector(".chat-body");
-
-const API_KEY = "AIzaSyB_O4QBz7_Nbr5ZIxQn09RNfnG0Dxd4wrU"; // Replace with your actual API key
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-
-chatbotToggler.addEventListener("click", () => {
-    chatbotPopup.style.display = "block";
-});
-
-closeChatbot.addEventListener("click", () => {
-    chatbotPopup.style.display = "none";
-});
-
-sendMessage.addEventListener("click", async (e) => {
-    e.preventDefault();
-    const userMessage = messageInput.value.trim();
-    if (userMessage) {
-        appendMessage("You: " + userMessage);
-        messageInput.value = "";
-        const botResponse = await getBotResponse(userMessage);
-        appendMessage("Bot: " + botResponse);
-    }
-});
-
-function appendMessage(message) {
-    const messageElement = document.createElement("div");
-    messageElement.textContent = message;
-    chatBody.appendChild(messageElement);
-    chatBody.scrollTop = chatBody.scrollHeight; // Scroll to the bottom
-}
-
-async function getBotResponse(message) {
-    const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            contents: [{ role: "user", parts: [{ text: message }] }]
-        })
-    });
-    const data = await response.json();
-    return data.candidates[0].content.parts[0].text;
-}
+  
   

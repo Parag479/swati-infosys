@@ -9668,7 +9668,7 @@ textarea.form-control {
 }
 
 .chatbot-popup {
-    display: none;
+    display: none; /* Initially hidden */
     position: fixed;
     bottom: 80px;
     right: 20px;
@@ -9683,6 +9683,9 @@ textarea.form-control {
     color: white;
     padding: 10px;
     border-radius: 10px 10px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .chat-body {
@@ -9701,6 +9704,7 @@ textarea.form-control {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
 
 #ftco-loader .path {
   stroke-dasharray: 1, 200;
