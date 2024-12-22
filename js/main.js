@@ -204,3 +204,36 @@
 
 })(jQuery);
 
+document.getElementById('chat-form').addEventListener('submit', async (e) => {
+	e.preventDefault();
+	const userInput = document.getElementById('user-input').value;
+	displayMessage(userInput, 'user');
+	document.getElementById('user-input').value = '';
+  
+	const response = await fetchGeminiResponse(userInput);
+	displayMessage(response, 'bot');
+  });
+  
+  function displayMessage(message, sender) {
+	const chatBox = document.getElementById('chat-box');
+	const messageElement = document.createElement('div');
+	messageElement.className = sender;
+	messageElement.innerText = message;
+	chatBox.appendChild(messageElement);
+	chatBox.scrollTop = chatBox.scrollHeight;
+  }
+  
+  async function fetchGeminiResponse(userInput) {
+	const apiKey = 'AIzaSyB_O4QBz7_Nbr5ZIxQn09RNfnG0Dxd4wrU';
+	const response = await fetch('https://api.gemini.com/v1/chat', {
+	  method: 'POST',
+	  headers: {
+		'Content-Type': 'application/json',
+		'Authorization': `Bearer ${apiKey}`
+	  },
+	  body: JSON.stringify({ message: userInput })
+	});
+	const data = await response.json();
+	return data.reply;
+  }
+  
